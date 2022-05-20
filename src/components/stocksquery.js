@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Plot from 'react-plotly.js';
 
 function Stocksquery() {
   const [stockChartXValues, setStockChartXValues] = useState([])
   const [stockChartYValues, setStockChartYValues] = useState([])
+  const [symbol, setSymbol] = useState("");
 
-  useEffect(() => {
+  const fetchStock = useCallback(async (StockSymbol) =>  {
     const API_KEY = '19JF4522MI6LKDM0';
-    let StockSymbol = 'AMZN'
     let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+
 
     fetch(API_CALL)
       .then((res)=>{
@@ -28,14 +29,28 @@ function Stocksquery() {
         console.log("xValues: ", xValues)
         console.log("yValues: ", yValues)
       })
+  }, [symbol]);
+
+  useEffect(() => {
+    const initialSymbol = 'AMZN'
+    fetchStock(initialSymbol);
+    
   }, [])
   
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    fetchStock(symbol);
+  }
 
   return (
     <>
       <div>Stocksquery</div>
       {/* <p>x-values: {stockChartXValues}</p>
       <p>x-values: {stockChartYValues}</p> */}
+      <form onSubmit={handleOnSubmit}>
+        <input type="text" name="symbol" value={symbol} onChange={(e)=>{setSymbol(e.target.value)}} />
+        <input type="submit" value="search" />
+      </form>
       <Plot
         data={[
           {
