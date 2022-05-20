@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Login = () => {
@@ -10,25 +11,27 @@ const Login = () => {
     e.preventDefault();
 
     const onLogin = async () => {
-      // const responseBody = await fetch(`http://localhost:3000/login?email=${email}&password=${password}`, {
-      const responseBody = await fetch(`http://localhost:3000/login?` + new URLSearchParams({email: email, password: password}), {
-        method: 'POST'
+      fetch("http://localhost:3000/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: {
+            email: email,
+            password: password,
+          },
+        }),
       })
-      .then(response => {
-        // let theData = {
-        //   Authorization: response.headers.get('Authorization')
-        // }
-        // setResponseHeader(theData)
-        // console.log("login response header: ", theData)
-        console.log("login response header: ", response)
-        return response.json();
+      .then((res) => {
+        if (res.ok) {
+          console.log(res.headers.get("Authorization"));
+          localStorage.setItem("token", res.headers.get("Authorization"));
+          return res.json();
+        } else {
+          throw new Error(res);
+        }
       })
-      .then(data => {
-        setResponseData(data.data);
-        console.log("login details: ", data.data);
-      })
-      return responseBody;
-
     }
 
     onLogin();
@@ -39,7 +42,7 @@ const Login = () => {
     if(responseData !== null && responseHeader !== null){
         console.log("response header and data: ", `${JSON.stringify(responseHeader)}, ${JSON.stringify(responseData)}`)
     }
-  }, [responseData])
+  }, [responseData, responseHeader])
 
   return ( 
     <form onSubmit={handleOnSubmit}>
