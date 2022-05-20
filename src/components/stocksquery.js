@@ -26,8 +26,8 @@ function Stocksquery() {
         setStockChartXValues(xValues);
         setStockChartYValues(yValues);
 
-        console.log("xValues: ", xValues)
-        console.log("yValues: ", yValues)
+        // console.log("xValues: ", xValues)
+        // console.log("yValues: ", yValues)
       })
   }, [symbol]);
 
@@ -58,10 +58,10 @@ function Stocksquery() {
             y: stockChartYValues,
             type: 'scatter',
             mode: 'lines+markers',
-            marker: {color: 'red'},
+            marker: {color: 'green'},
           },
         ]}
-        layout={ {width: 720, height: 440, title: 'A Fancy Plot'} }
+        layout={ {width: 720, height: 440, title: symbol} }
       />
     </>
   )
