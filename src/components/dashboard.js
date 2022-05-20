@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Userslist from './userslist'
 
 function Dashboard() {
   const [role, setRole] = useState("")
@@ -34,6 +35,8 @@ function Dashboard() {
       { role == "user" && <div>Welcome user</div>}
       { role == "admin" && <div>Welcome admin</div>}
       <Link to="/">Go back</Link>
+      { role == "admin" && <Userslist/> }
+      { role == "user" && <div></div>}
     </>
   )
 }
