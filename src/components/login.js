@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -49,6 +50,7 @@ const Login = () => {
       <input type="text" placeholder="email" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
       <input type="password" placeholder="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
       <input type="submit" value="login" />
+      <Link to="/dashboard">Go to Dashboard</Link>
     </form>
   );
 }
