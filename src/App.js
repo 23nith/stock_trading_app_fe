@@ -1,8 +1,9 @@
 import './App.css';
 import Login from './components/login';
-import Dashboard from './components/dashboard';
+// import Dashboard from './components/dashboard';
+// import BuyStocks from './components/temporary folder/buyStocks';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import BuyStocks from './components/buyStocks';
+import Wireframe from './components/dashboard';
 
 const API_URL = 'http://localhost:3000/Login'
 
@@ -16,12 +17,15 @@ function App() {
           <Route exact path="/">
             <Login/>
           </Route>
-          <Route path="/dashboard">
+          <Route path="/wireframe">
+            <Wireframe/>
+          </Route>
+          {/* <Route path="/dashboard">
             <Dashboard/>
           </Route>
           <Route path="/buy">
             <BuyStocks/>
-          </Route>
+          </Route> */}
         </Switch>
       </div>
     </Router>

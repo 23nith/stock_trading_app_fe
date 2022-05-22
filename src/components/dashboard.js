@@ -1,45 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import Stocksquery from './stocksquery'
-import Userslist from './userslist'
+import React from 'react'
+import Contentarea from './dashboard/contentarea'
+import Menu from './dashboard/menu'
 
-function Dashboard() {
-  const [role, setRole] = useState("")
-
-  useEffect(() => {
-    const onMount = async () => {
-      fetch("http://localhost:3000/current_user", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("token")
-        }
-      })
-      .then((res) => {
-        if (res.ok) {
-          console.log("response: ", res);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("data: ", data.role);
-        setRole(data.role)
-      })
-    }
-  
-    onMount();
-  }, [])
-  
-
+function Wireframe() {
   return (
-    <>
-      { role == "user" && <div>Welcome user</div>}
-      { role == "admin" && <div>Welcome admin</div>}
-      <Link to="/">Go back</Link>
-      { role == "admin" && <Userslist/> }
-      { role == "user" && <Stocksquery/>}
-    </>
+    <div className='flex border-black border-2 h-screen'>
+      {/* <div className='basis-2/12 border-slate-800 border-2'>Menu</div> */}
+      {/* <div className='basis-10/12 border-slate-800 border-2'>Content Area</div> */}
+      <Menu/>
+      <Contentarea/>
+    </div>
   )
 }
 
-export default Dashboard
+export default Wireframe

@@ -48,9 +48,15 @@ const Login = () => {
   return ( 
     <form onSubmit={handleOnSubmit}>
       <input type="text" placeholder="email" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
+      <br/>
+      <br/>
       <input type="password" placeholder="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
+      <br/>
       <input type="submit" value="login" />
+      <br/>
       <Link to="/dashboard">Go to Dashboard</Link>
+      <br/>
+      <Link to="/wireframe">Go to Wireframe</Link>
     </form>
   );
 }
