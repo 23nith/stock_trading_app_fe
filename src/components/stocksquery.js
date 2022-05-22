@@ -63,6 +63,7 @@ function Stocksquery() {
         ]}
         layout={ {width: 720, height: 440, title: symbol} }
       />
+      
     </>
   )
 }
