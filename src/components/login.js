@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setShowLogin}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [responseHeader, setResponseHeader] = useState('')
@@ -28,6 +28,9 @@ const Login = () => {
         if (res.ok) {
           console.log(res.headers.get("Authorization"));
           localStorage.setItem("token", res.headers.get("Authorization"));
+          if (res.headers.get("Authorization") != null){
+            setShowLogin(false)
+          }
           return res.json();
         } else {
           throw new Error(res);

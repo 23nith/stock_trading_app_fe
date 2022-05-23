@@ -1,6 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-function Menu() {
+function Menu({setShowLogin}) {
+  const handleOnSignOut = () => {
+    setShowLogin(true);
+  }
   return (
     <div className='basis-2/12 border-slate-800 border-2 '>
       Menu
@@ -8,25 +12,31 @@ function Menu() {
         
         <div className='my-3.5'>
           <button>
-            Dashboard
+          <Link to="/front-end-stock-app/" >Dashboard</Link>
           </button>
         </div>
 
         <div className='my-3.5'>
           <button>
-            Portfolio
+            <Link to="/front-end-stock-app/portfolio" >Portfolio</Link>
           </button>
         </div>
 
         <div className='my-3.5'>
           <button>
-            Discover
+            <Link to="/front-end-stock-app/discover" >Discover</Link>
           </button>
         </div>
 
         <div className='my-3.5'>
           <button>
-            History
+            <Link to="/front-end-stock-app/history" >History</Link>
+          </button>
+        </div>
+
+        <div className='my-3.5'>
+          <button onClick={handleOnSignOut}>
+            Sign Out
           </button>
         </div>
 
