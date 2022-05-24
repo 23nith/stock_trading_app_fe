@@ -10,6 +10,7 @@ import Contentarea from './components/dashboard/contentarea';
 import Portfolio from './components/dashboard/portfolio';
 import History from './components/dashboard/history';
 import Discover from './components/dashboard/discover';
+import UserManagement from './components/dashboard/userManagement';
 
 const API_URL = 'http://localhost:3000/Login'
 
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route exact path="/front-end-stock-app/history">
               <History/>
+            </Route>
+            <Route exact path="/front-end-stock-app/management">
+              <UserManagement/>
             </Route>
           </Switch>
         </div>}
