@@ -3,14 +3,15 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { TradersContext } from '../../contexts/TradersContext'
 import { UserContext } from '../../contexts/UserContext';
 import EditModal from './userManagement/editModal';
+import ViewModal from './userManagement/viewModal';
 
 function UserManagement() {
-  const [usersList, setUsersList] = useState([]);
   const {traders, setTraders, updateTraders} = useContext(TradersContext);
   const {currentUser} = useContext(UserContext);
   const [userToEdit, setUserToEdit] = useState("");
   const history = useHistory();
   const [ShowEditModal, setShowEditModal] = useState(false)
+  const [ShowViewModal, setShowViewModal] = useState(false)
 
   const onMount = () => {
     fetch("http://localhost:3000/traders", {
@@ -28,7 +29,6 @@ function UserManagement() {
     })
     .then((data) => {
       console.log("traders data: ", data);
-      setUsersList(data)
       setTraders(data)
     })
   }
@@ -106,7 +106,32 @@ function UserManagement() {
       })
   }
 
-  
+  const handleOnView = (e, key) => {
+    setShowViewModal(true)
+
+    fetch(`http://localhost:3000/trader/`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+        },
+        body: JSON.stringify(
+          {
+            id: key,
+          },
+        ),
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(res);
+        }
+      }).then((data) => {
+        console.log("Edit this ID: ", data)
+        setUserToEdit(data)
+      })
+  }
 
   return (
     <div className='basis-10/12 border-slate-800 border-2'>
@@ -146,13 +171,22 @@ function UserManagement() {
                 >
                   Edit
                 </button>
+
+                <button
+                  className='rounded bg-sky-500/100 w-24 p-1 text-white m-2'
+                  onClick={(e)=> {handleOnView(e, user.id)}}
+                >
+                  View
+                </button>
                 
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {ShowEditModal && <EditModal setShowEditModal={setShowEditModal} userToEdit={userToEdit}/>}
+      {ShowEditModal && <EditModal setShowEditModal={setShowEditModal} userToEdit={userToEdit} />}
+      {ShowViewModal && <ViewModal setShowViewModal={setShowViewModal} userToEdit={userToEdit}/>}
+
     </div>
   )
 }

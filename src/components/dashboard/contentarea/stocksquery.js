@@ -36,7 +36,7 @@ function Stocksquery() {
 
   useEffect(() => {
     const initialSymbol = 'AMZN'
-    fetchStock(initialSymbol);
+    // fetchStock(initialSymbol);
     
   }, [])
 
