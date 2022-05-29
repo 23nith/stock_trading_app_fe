@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Plot from 'react-plotly.js';
+import { GraphContext } from '../../../contexts/GraphContext';
 
 function Stocksquery() {
-  const [stockChartXValues, setStockChartXValues] = useState([])
-  const [stockChartYValues, setStockChartYValues] = useState([])
-  const [symbol, setSymbol] = useState("");
-  const [chartLabel, setChartLabel] = useState("AMZN")
+  const {stockChartXValues, setStockChartXValues, stockChartYValues, setStockChartYValues, symbol, setSymbol, chartLabel, setChartLabel} = useContext(GraphContext)
+  // const [stockChartXValues, setStockChartXValues] = useState([])
+  // const [stockChartYValues, setStockChartYValues] = useState([])
+  // const [symbol, setSymbol] = useState("");
+  // const [chartLabel, setChartLabel] = useState("AMZN")
 
   const fetchStock = useCallback(async (StockSymbol) =>  {
     const API_KEY = '19JF4522MI6LKDM0';
@@ -17,14 +19,18 @@ function Stocksquery() {
       })
       .then((data)=>{
         console.log(data);
-        const xValues = [];
-        const yValues = [];
-        for(var key in data['Time Series (Daily)']){
-          xValues.push(key);
-          yValues.push(data['Time Series (Daily)'][key]['1. open']);
+        if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
+          console.log("5 calls per minute limit.")
+        }else{
+          const xValues = [];
+          const yValues = [];
+          for(var key in data['Time Series (Daily)']){
+            xValues.push(key);
+            yValues.push(data['Time Series (Daily)'][key]['1. open']);
+          }
+          setStockChartXValues(xValues);
+          setStockChartYValues(yValues);
         }
-        setStockChartXValues(xValues);
-        setStockChartYValues(yValues);
       })
   }, [symbol]);
 
@@ -33,13 +39,17 @@ function Stocksquery() {
     fetchStock(initialSymbol);
     
   }, [])
+
+  useEffect(() => {
+    fetchStock(symbol);
+  }, [symbol])
   
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = useCallback((e) => {
     e.preventDefault();
     fetchStock(symbol);
     setChartLabel(symbol)
     setSymbol("")
-  }
+  }, [symbol])
 
   return (
     <div className='basis-3/4 border-slate-800 border-2 flex flex-col justify-center items-center'>

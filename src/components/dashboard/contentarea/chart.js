@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2'
+import { StocksContext } from '../../../contexts/StocksContext';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 // export const data = {
@@ -33,37 +34,63 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Chart() {
   const [stocks, setStocks] = useState([])
+  const {userStocks, setUserStocks} = useContext(StocksContext);
+  const [labels, setLabels] = useState(['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'])
+  const [stockCount, setStockCount] = useState([12, 19, 3, 5, 2, 3])
 
-  useEffect(() => {
-    const onMount = async () => {
-      fetch("http://localhost:3000/stocks", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("token")
-        }
-      })
-      .then((res) => {
-        if (res.ok) {
-          // console.log("response: ", res);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        // console.log("data: ", data);
-        setStocks(data);
-      })
-    }
-  
+  const onMount =  useCallback(() =>{
+    fetch("http://localhost:3000/stocks", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        // console.log("response: ", res);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("data: ", data);
+      // setStocks(data);
+      if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
+        console.log("5 calls per minute limit.")
+      }else{
+        setUserStocks(data);
+      }
+    })
+  }, [userStocks])
+
+  useEffect(() => {  
     onMount();
   }, [])
 
+  useEffect(()=>{
+    if(userStocks){
+      let labels = userStocks.map(stock => {
+        return stock.ticker;
+      });
+      setLabels(labels)
+  
+      let stockCount = userStocks.map(stock => {
+        return stock.shares_owned;
+      });
+  
+      setStockCount(stockCount)
+    }
+
+  }, [userStocks])
+
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: [...labels],
     datasets: [
       {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        // data: [12, 19, 3, 5, 2, 3],
+        data: [...stockCount],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',

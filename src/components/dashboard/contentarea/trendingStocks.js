@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { GraphContext } from '../../../contexts/GraphContext'
+import { TopTenContext } from '../../../contexts/TopTenContext'
 
 function TrendingStocks() {
+  const {topTen, setTopTen} = useContext(TopTenContext)
+  const {setSymbol, setChartLabel} = useContext(GraphContext)
   const [stocks, setStocks] = useState([])
 
   useEffect(() => {
@@ -20,12 +24,19 @@ function TrendingStocks() {
       })
       .then((data) => {
         // console.log("data: ", data);
-        setStocks(data);
+        // setStocks(data);
+        setTopTen(data);
       })
     }
   
     onMount();
   }, [])
+
+  const handleOnClick = (e, symbol) => {
+    setSymbol(symbol);
+    setChartLabel(symbol);
+    console.log("ticker: ", symbol );
+  }
   
   return (
     <div className='basis-1/4 border-slate-800 border-2'>
@@ -41,9 +52,9 @@ function TrendingStocks() {
           </tr>
         </thead>
         <tbody>
-          {stocks && stocks.map((stock) => (
+          {topTen && topTen.map((stock) => (
             <tr key={stock.id}>
-              <td>{stock.symbol}</td>
+              <td onClick={(e) => {handleOnClick(e, stock.symbol)}}>{stock.symbol}</td>
               <td>{stock.latest_price}</td>
               <td>{stock.week_52_high}</td>
               <td>{stock.week_52_low}</td>

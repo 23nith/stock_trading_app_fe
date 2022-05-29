@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { StocksContext } from '../../../contexts/StocksContext'
 
 function SellStocks() {
-  const [userStocks, setUserStocks] = useState([])
+  const {userStocks, setUserStocks, fetchUserStocks} = useContext(StocksContext)
+  // const [userStocks, setUserStocks] = useState([])
   const [stockToSell, setStockToSell] = useState("")
   const [stockInfo, setStockInfo] = useState("")
   const [stockCount, setStockCount] = useState(1)
@@ -35,28 +37,31 @@ function SellStocks() {
   }, [])
   
   useEffect(() => {
-    fetch("http://localhost:3000/stock_info", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        stock: {
-          ticker: stockToSell,
+    if(stockToSell !== ""){
+      fetch("http://localhost:3000/stock_info", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
         },
-      }),
-    })
-    .then((res) => {
-      if (res.ok) {
-        // console.log("response: ", res);
-      }
-      return res.json();
-    })
-    .then((data) => {
-      // console.log("data: ", data);
-      setStockInfo(data);
-    })
+        body: JSON.stringify({
+          stock: {
+            ticker: stockToSell,
+          },
+        }),
+      })
+      .then((res) => {
+        if (res.ok) {
+          // console.log("response: ", res);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // console.log("data: ", data);
+        setStockInfo(data);
+      })
+    
+    }
 
     onMount();
   }, [stockToSell])
@@ -84,12 +89,14 @@ function SellStocks() {
     })
     .then((res) => {
       if (res.ok) {
+        fetchUserStocks("sold");
         return res.json();
       } else {
         throw new Error(res);
       }
     })
     setStockToSell("")
+    
   }
 
   return (

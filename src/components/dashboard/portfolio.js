@@ -1,7 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import { isFocusable } from '@testing-library/user-event/dist/utils'
+import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { StocksContext } from '../../contexts/StocksContext'
+import { UserContext } from '../../contexts/UserContext'
 
 function Portfolio() {
-  const [stocks, setStocks] = useState([])
+  const {userStocks, setUserStocks} = useContext(StocksContext)
+  const {currentUser} = useContext(UserContext)
+  const history = useHistory();
+  // const [stocks, setStocks] = useState([])
+
+  useEffect(()=>{
+    if(currentUser.role == "admin"){
+      history.push("/front-end-stock-app/management")
+    }
+  }, [currentUser])
 
   useEffect(() => {
     const onMount = async () => {
@@ -20,11 +33,16 @@ function Portfolio() {
       })
       .then((data) => {
         // console.log("data: ", data);
-        setStocks(data);
+        // setStocks(data);
+        setUserStocks(data);
       })
     }
   
-    onMount();
+    if(currentUser.role == "admin"){
+      history.push("/front-end-stock-app/management")
+    }else{
+      onMount();
+    }
   }, [])
 
   return (
@@ -40,7 +58,7 @@ function Portfolio() {
           </tr>
         </thead>
         <tbody>
-          {stocks && stocks.map((stock) => (
+          {userStocks && userStocks.map((stock) => (
             <tr key={stock.id}>
               <td>{stock.ticker}</td>
               <td>{stock.investment_value}</td>

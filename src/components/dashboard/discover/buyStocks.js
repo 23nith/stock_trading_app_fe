@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { StocksContext } from '../../../contexts/StocksContext'
 
 function BuyStocks() {
   const [symbol, setSymbol] = useState("")
   const [stockInfo, setStockInfo] = useState("")
   const [stockCount, setStockCount] = useState(1)
+  const {fetchUserStocks} = useContext(StocksContext)
 
   const handleOnSubmitSearch = (e) => {
     e.preventDefault();
@@ -51,6 +53,8 @@ function BuyStocks() {
       .then((res) => {
         if (res.ok) {
           console.log(res)
+          fetchUserStocks("bought");
+          setStockInfo("");
           return res.json();
         } else {
           throw new Error(res);
@@ -61,6 +65,7 @@ function BuyStocks() {
   return (
     <div className='basis-3/6 border-slate-800 border-2'>
       <form onSubmit={handleOnSubmitSearch}>
+        <h2>Search to buy stocks</h2>
         <input placeholder='Type symbol here' type="text" name="symbol" value={symbol} 
           onChange={(e)=>{setSymbol(e.target.value.toUpperCase())}} 
           className='rounded-md border-slate-800 border-2 m-2 p-1'/>

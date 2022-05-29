@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import { UserContext } from "../contexts/UserContext";
 
 const Login = ({setShowLogin}) => {
+  const {currentUser, setCurrentUser} = useContext(UserContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [responseHeader, setResponseHeader] = useState('')
@@ -67,6 +69,7 @@ const Login = ({setShowLogin}) => {
       .then((data) => {
         console.log("data: ", data.role);
         localStorage.setItem("user_type", data.role);
+        setCurrentUser(data);
       })
     }
   

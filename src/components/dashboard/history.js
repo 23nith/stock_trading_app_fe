@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { TransactionsContext } from '../../contexts/TransactionsContext'
 
 function History() {
+  const {userTransactions, setUserTransactions} = useContext(TransactionsContext)
   const [transactions, setTransactions] = useState(null)
   const [userType, setUserType] = useState()
 
@@ -22,7 +24,8 @@ function History() {
       })
       .then((data) => {
         // console.log("data: ", data);
-        setTransactions(data)
+        // setTransactions(data)
+        setUserTransactions(data)
       })
     },
     [userType],
@@ -55,7 +58,7 @@ function History() {
           </tr>
         </thead>
         <tbody>
-          {transactions && transactions.map((transaction) => (
+          {userTransactions && userTransactions.map((transaction) => (
             <tr key={transaction.id}>
               {userType == "admin" && <td>{transaction.user_id}</td>}
               <td>{transaction.id}</td>

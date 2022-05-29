@@ -1,32 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { TradersContext } from '../../contexts/TradersContext'
+import { UserContext } from '../../contexts/UserContext';
 
 function UserManagement() {
-  const [usersList, setUsersList] = useState([])
-  const [userToEdit, setUserToEdit] = useState("")
+  const [usersList, setUsersList] = useState([]);
+  const {traders, setTraders} = useContext(TradersContext);
+  const {currentUser} = useContext(UserContext);
+  const [userToEdit, setUserToEdit] = useState("");
+  const history = useHistory();
+
+  const onMount = () => {
+    fetch("http://localhost:3000/traders", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        console.log("traders response: ", res);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("traders data: ", data);
+      setUsersList(data)
+      setTraders(data)
+    })
+  }
 
   useEffect(() => {
-    const onMount = async () => {
-      fetch("http://localhost:3000/traders", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("token")
-        }
-      })
-      .then((res) => {
-        if (res.ok) {
-          console.log("traders response: ", res);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("traders data: ", data);
-        setUsersList(data)
-      })
-    }
+    if(currentUser.role == "user"){
+      console.log("current user role is user");
+      history.push('/front-end-stock-app/');
+    }else{
+      onMount();
+    }  
   
-    onMount();
   }, [])
+
+  useEffect(() => {
+    if(currentUser.role == "user"){
+      console.log("current user role is user");
+      history.push('/front-end-stock-app/');
+    }
+  }, [currentUser])
 
   const handleOnApprove = (e, key) => {
     console.log("e: ", e.target)
@@ -99,7 +119,7 @@ function UserManagement() {
           </tr>
         </thead>
         <tbody>
-          {usersList.map((user) => (
+          {traders !== "" && traders.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.email}</td>

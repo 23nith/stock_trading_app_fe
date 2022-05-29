@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 
 function Menu({setShowLogin}) {
   const [role, setRole] = useState("")
+  // const {currentUser, setCurrentUser} = useContext(UserContext)
 
   useEffect(() => {
     const onMount = async () => {
