@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { TradersContext } from '../../contexts/TradersContext'
 import { UserContext } from '../../contexts/UserContext';
+import EditModal from './userManagement/editModal';
 
 function UserManagement() {
   const [usersList, setUsersList] = useState([]);
-  const {traders, setTraders} = useContext(TradersContext);
+  const {traders, setTraders, updateTraders} = useContext(TradersContext);
   const {currentUser} = useContext(UserContext);
   const [userToEdit, setUserToEdit] = useState("");
   const history = useHistory();
+  const [ShowEditModal, setShowEditModal] = useState(false)
 
   const onMount = () => {
     fetch("http://localhost:3000/traders", {
@@ -52,7 +54,6 @@ function UserManagement() {
     console.log("e: ", e.target)
     console.log("key: ", key)
 
-    // fetch("http://localhost:3000/traders/?" + new URLSearchParams({id: key}), {
     fetch(`http://localhost:3000/approve_user/`, {
         method: "post",
         headers: {
@@ -68,6 +69,7 @@ function UserManagement() {
       .then((res) => {
         if (res.ok) {
           console.log(res)
+          updateTraders();
           return res.json();
         } else {
           throw new Error(res);
@@ -78,6 +80,7 @@ function UserManagement() {
   const handleOnEdit = (e, key) => {
     console.log("e: ", e.target)
     console.log("key: ", key)
+    setShowEditModal(true)
 
     fetch(`http://localhost:3000/trader/`, {
         method: "post",
@@ -99,6 +102,7 @@ function UserManagement() {
         }
       }).then((data) => {
         console.log("Edit this ID: ", data)
+        setUserToEdit(data)
       })
   }
 
@@ -148,6 +152,7 @@ function UserManagement() {
           ))}
         </tbody>
       </table>
+      {ShowEditModal && <EditModal setShowEditModal={setShowEditModal} userToEdit={userToEdit}/>}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { UserContext } from "../contexts/UserContext";
 
-const Login = ({setShowLogin}) => {
+const Login = ({setShowLogin, setShowSignUp}) => {
   const {currentUser, setCurrentUser} = useContext(UserContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -79,6 +79,10 @@ const Login = ({setShowLogin}) => {
     }
   }, [])
   
+  const handleSignUp = () => {
+    setShowLogin(false)
+    setShowSignUp(true)
+  }
 
   return ( 
     <div className="w-screen h-screen flex justify-center items-center border-slate-800 border-2">
@@ -97,6 +101,10 @@ const Login = ({setShowLogin}) => {
           <input type="submit" value="login" 
             className='rounded bg-sky-500/100 w-24 p-1 text-white'
           />
+          <button
+            onClick={handleSignUp} 
+            className='rounded bg-slate-700 w-24 p-1 text-white m-2'
+            >Sign Up</button>
         </form>
       </div>
     </div>

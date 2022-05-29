@@ -54,7 +54,7 @@ function Chart() {
     })
     .then((data) => {
       console.log("data: ", data);
-      // setStocks(data);
+      setStocks(data);
       if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
         console.log("5 calls per minute limit.")
       }else{

@@ -8,7 +8,6 @@ function Portfolio() {
   const {userStocks, setUserStocks} = useContext(StocksContext)
   const {currentUser} = useContext(UserContext)
   const history = useHistory();
-  // const [stocks, setStocks] = useState([])
 
   useEffect(()=>{
     if(currentUser.role == "admin"){
@@ -27,13 +26,10 @@ function Portfolio() {
       })
       .then((res) => {
         if (res.ok) {
-          // console.log("response: ", res);
         }
         return res.json();
       })
       .then((data) => {
-        // console.log("data: ", data);
-        // setStocks(data);
         setUserStocks(data);
       })
     }
@@ -46,28 +42,30 @@ function Portfolio() {
   }, [])
 
   return (
-    <div className='basis-10/12 border-slate-800 border-2'>
-      Portfolio
-      <table className='min-w-full'>
-        <thead className='border-b'>
-          <tr>
-            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Ticker</th>
-            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Investment Value</th>
-            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Shares Owned</th>
-            {/* <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Latest Price</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {userStocks && userStocks.map((stock) => (
-            <tr key={stock.id}>
-              <td>{stock.ticker}</td>
-              <td>{stock.investment_value}</td>
-              <td>{stock.shares_owned}</td>
-              {/* <td>{stock.latest_price}</td> */}
+    <div className='basis-10/12 border-slate-800 border-2 flex justify-center items-start pt-5'>
+      <div className='w-4/5 border-slate-800 border-2 rounded-md'>
+        Portfolio
+        <table className='min-w-full'>
+          <thead className='border-b'>
+            <tr>
+              <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Ticker</th>
+              <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Investment Value</th>
+              <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Shares Owned</th>
+              {/* <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Latest Price</th> */}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {userStocks && userStocks.map((stock) => (
+              <tr key={stock.id}>
+                <td>{stock.ticker}</td>
+                <td>{stock.investment_value}</td>
+                <td>{stock.shares_owned}</td>
+                {/* <td>{stock.latest_price}</td> */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

@@ -56,11 +56,11 @@ function Stocksquery() {
       <div>Stocksquery</div>
       <div>
         <form onSubmit={handleOnSubmit}>
-          <input className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1 w-26' type="text" name="symbol" value={symbol} onChange={(e)=>{setSymbol(e.target.value)}} />
+          <input className='mt-1 px-3 py-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1 w-26' type="text" name="symbol" value={symbol} onChange={(e)=>{setSymbol(e.target.value)}} />
           <input type="submit" value="search" />
         </form>
       </div>
-      <div>
+      <div className=''>
         <Plot
           data={[
             {
