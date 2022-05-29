@@ -36,7 +36,7 @@ function Portfolio() {
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Ticker</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Investment Value</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Shares Owned</th>
-            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Latest Price</th>
+            {/* <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Latest Price</th> */}
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@ function Portfolio() {
               <td>{stock.ticker}</td>
               <td>{stock.investment_value}</td>
               <td>{stock.shares_owned}</td>
-              <td>{stock.latest_price}</td>
+              {/* <td>{stock.latest_price}</td> */}
             </tr>
           ))}
         </tbody>

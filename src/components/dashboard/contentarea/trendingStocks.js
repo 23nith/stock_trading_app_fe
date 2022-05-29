@@ -34,7 +34,7 @@ function TrendingStocks() {
         <thead className='border-b'>
           <tr>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Ticker</th>
-            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Open</th>
+            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Latest</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>High</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Low</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Close</th>
@@ -44,10 +44,10 @@ function TrendingStocks() {
           {stocks && stocks.map((stock) => (
             <tr key={stock.id}>
               <td>{stock.symbol}</td>
-              <td>{stock.open}</td>
-              <td>{stock.high}</td>
-              <td>{stock.low}</td>
-              <td>{stock.close}</td>
+              <td>{stock.latest_price}</td>
+              <td>{stock.week_52_high}</td>
+              <td>{stock.week_52_low}</td>
+              <td>{stock.previous_close}</td>
             </tr>
           ))}
         </tbody>

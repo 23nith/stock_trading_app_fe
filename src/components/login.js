@@ -48,19 +48,55 @@ const Login = ({setShowLogin}) => {
     }
   }, [responseData, responseHeader])
 
+  useEffect(() => {
+    const onUnmount = async () => {
+      console.log("unmounted")
+      fetch("http://localhost:3000/current_user", {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+        }
+      })
+      .then((res) => {
+        if (res.ok) {
+          console.log("response: ", res);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("data: ", data.role);
+        localStorage.setItem("user_type", data.role);
+      })
+    }
+  
+    
+    return () => {
+      onUnmount();
+    }
+  }, [])
+  
+
   return ( 
-    <form onSubmit={handleOnSubmit}>
-      <input type="text" placeholder="email" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-      <br/>
-      <br/>
-      <input type="password" placeholder="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
-      <br/>
-      <input type="submit" value="login" />
-      <br/>
-      <Link to="/dashboard">Go to Dashboard</Link>
-      <br/>
-      <Link to="/wireframe">Go to Wireframe</Link>
-    </form>
+    <div className="w-screen h-screen flex justify-center items-center border-slate-800 border-2">
+      <div>
+        <form onSubmit={handleOnSubmit} className="" >
+          <input type="text" placeholder="email" value={email} 
+            onChange={(e)=>{setEmail(e.target.value)}} 
+            className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
+            />
+          <br/>
+          <input type="password" placeholder="password" 
+            value={password} onChange={(e)=>{setPassword(e.target.value)}} 
+            className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
+            />
+          <br/>
+          <input type="submit" value="login" 
+            className='rounded bg-sky-500/100 w-24 p-1 text-white'
+          />
+        </form>
+      </div>
+    </div>
   );
 }
  

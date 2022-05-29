@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 function History() {
   const [transactions, setTransactions] = useState(null)
+  const [userType, setUserType] = useState()
 
-  useEffect(() => {
-    const onMount = async () => {
+
+  const onMount = useCallback(
+    () => {
       fetch("http://localhost:3000/transactions", {
         method: "get",
         headers: {
@@ -22,8 +24,16 @@ function History() {
         // console.log("data: ", data);
         setTransactions(data)
       })
-    }
+    },
+    [userType],
+  )
   
+
+  
+
+  useEffect(() => {
+    setUserType(localStorage.getItem("user_type")) 
+    console.log("mounted, user_type is : ", userType )
     onMount();
   }, [])
 
@@ -33,6 +43,8 @@ function History() {
       <table className='min-w-full'>
         <thead className='border-b'>
           <tr>
+            {userType == "admin" && <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>User ID</th>}
+            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Transaction ID</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Transaction Type</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Ticker</th>
             <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Share Price</th>
@@ -45,8 +57,10 @@ function History() {
         <tbody>
           {transactions && transactions.map((transaction) => (
             <tr key={transaction.id}>
+              {userType == "admin" && <td>{transaction.user_id}</td>}
+              <td>{transaction.id}</td>
               <td>{transaction.transaction_type}</td>
-              <td>{transaction.ticker}</td>
+              <td>{transaction.stock.ticker}</td>
               <td>{transaction.share_price}</td>
               <td>{transaction.count}</td>
               <td>{transaction.gains}</td>

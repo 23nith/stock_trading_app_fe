@@ -34,29 +34,32 @@ function Menu({setShowLogin}) {
   return (
     <div className='basis-2/12 border-slate-800 border-2 '>
       Menu
+
+      {role == "admin" && <div><br/><h1>Welcome Admin</h1></div>}
+
       <div className='mt-20 flex flex-col'>
         
-        <div className='my-3.5'>
+        {role == "user" && <div className='my-3.5'>
           <button>
           <Link to="/front-end-stock-app/" >Dashboard</Link>
           </button>
-        </div>
+        </div>}
 
-        <div className='my-3.5'>
+        {role == "user" && <div className='my-3.5'>
           <button>
             <Link to="/front-end-stock-app/portfolio" >Portfolio</Link>
           </button>
-        </div>
+        </div>}
 
-        <div className='my-3.5'>
+        {role == "user" && <div className='my-3.5'>
           <button>
-            <Link to="/front-end-stock-app/discover" >Discover</Link>
+            <Link to="/front-end-stock-app/discover" >Buy/Sell</Link>
           </button>
-        </div>
+        </div>}
 
         <div className='my-3.5'>
           <button>
-            <Link to="/front-end-stock-app/history" >History</Link>
+            <Link to="/front-end-stock-app/history" >Transaction History</Link>
           </button>
         </div>
 
