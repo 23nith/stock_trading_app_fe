@@ -9,34 +9,38 @@ function Stocksquery() {
   // const [symbol, setSymbol] = useState("");
   // const [chartLabel, setChartLabel] = useState("AMZN")
 
-  const fetchStock = useCallback(async (StockSymbol) =>  {
-    const API_KEY = '19JF4522MI6LKDM0';
-    let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
-
-    fetch(API_CALL)
-      .then((res)=>{
-        return res.json()
-      })
-      .then((data)=>{
-        console.log(data);
-        if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
-          console.log("5 calls per minute limit.")
-        }else{
-          const xValues = [];
-          const yValues = [];
-          for(var key in data['Time Series (Daily)']){
-            xValues.push(key);
-            yValues.push(data['Time Series (Daily)'][key]['1. open']);
+  const fetchStock = (StockSymbol) =>  {
+    if(StockSymbol !== ""){
+      const API_KEY = '19JF4522MI6LKDM0';
+      let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+  
+      fetch(API_CALL)
+        .then((res)=>{
+          return res.json()
+        })
+        .then((data)=>{
+          console.log(data);
+          if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
+            console.log("5 calls per minute limit.")
+          }else{
+            const xValues = [];
+            const yValues = [];
+            for(var key in data['Time Series (Daily)']){
+              xValues.push(key);
+              yValues.push(data['Time Series (Daily)'][key]['1. open']);
+            }
+            setStockChartXValues(xValues);
+            setStockChartYValues(yValues);
           }
-          setStockChartXValues(xValues);
-          setStockChartYValues(yValues);
-        }
-      })
-  }, [symbol]);
+        })
+    }
+  }
 
   useEffect(() => {
     const initialSymbol = 'AMZN'
-    // fetchStock(initialSymbol);
+    // if(){
+      // fetchStock(initialSymbol);
+    // }
     
   }, [])
 
@@ -44,12 +48,12 @@ function Stocksquery() {
     fetchStock(symbol);
   }, [symbol])
   
-  const handleOnSubmit = useCallback((e) => {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
     fetchStock(symbol);
     setChartLabel(symbol)
     setSymbol("")
-  }, [symbol])
+  }
 
   return (
     <div className='basis-3/4 border-slate-800 border-2 flex flex-col justify-center items-center'>

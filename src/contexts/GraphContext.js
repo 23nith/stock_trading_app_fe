@@ -3,8 +3,8 @@ import React, { createContext, useState } from 'react'
 export const GraphContext = createContext();
 
 const GraphContextProvider = (props) => {
-  const [stockChartXValues, setStockChartXValues] = useState([])
-  const [stockChartYValues, setStockChartYValues] = useState([])
+  const [stockChartXValues, setStockChartXValues] = useState("")
+  const [stockChartYValues, setStockChartYValues] = useState("")
   const [symbol, setSymbol] = useState("");
   const [chartLabel, setChartLabel] = useState("AMZN")
 

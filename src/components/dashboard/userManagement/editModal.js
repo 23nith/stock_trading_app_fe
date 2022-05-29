@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-function EditModal({setShowEditModal, userToEdit}) {
-  const [email, setEmail] = useState(userToEdit.email)
-  const [firstName, setFirstName] = useState(userToEdit.first_name)
-  const [lastName, setLastName] = useState(userToEdit.last_name)
+function EditModal({setShowEditModal, userToEdit, handleOnEditSubmit}) {
+  const [id, setId] = useState()
+  const [email, setEmail] = useState()
+  const [firstName, setFirstName] = useState()
+  const [lastName, setLastName] = useState()
 
   useEffect(() => {
+    setId(userToEdit.id)
     setEmail(userToEdit.email)
     setFirstName(userToEdit.first_name)
     setLastName(userToEdit.last_name)
@@ -17,6 +19,8 @@ function EditModal({setShowEditModal, userToEdit}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleOnEditSubmit({id, email, firstName, lastName})
+    setShowEditModal(false)
   }
   
   return (
@@ -26,14 +30,14 @@ function EditModal({setShowEditModal, userToEdit}) {
       
       <div className='w-6/12 h-3/6 bg-zinc-50 shadow-md shadow-black rounded-md justify-center items-center flex' onClick={stopBubbling}>
         <div className=''>
-          <form onSubmit={(e)=>{handleSubmit()}}>
+          <form onSubmit={handleSubmit}>
             <div className='justify-start flex flex-col items-start w-80'>
               <div className='w-full flex flex-row justify-between items-center'>
                 <div>
                   <label htmlFor="email">Email: </label>
                 </div>
                 <div>
-                  <input type="text" name="email" id="" value={email} className="m-2 rounded p-2 border-gray-800 border-2"/>
+                  <input type="text" name="email" id="" onChange={(e)=>{setEmail(e.target.value)}} value={email} className="m-2 rounded p-2 border-gray-800 border-2"/>
                 </div>
               </div>
 
@@ -42,7 +46,7 @@ function EditModal({setShowEditModal, userToEdit}) {
                   <label htmlFor="email">First Name: </label>
                 </div>
                 <div>
-                  <input type="text" name="firstname" id="" value={firstName} className="m-2 rounded p-2 border-gray-800 border-2"/>
+                  <input type="text" name="firstname" id="" onChange={(e)=>{setFirstName(e.target.value)}} value={firstName} className="m-2 rounded p-2 border-gray-800 border-2"/>
                 </div>
               </div>
 
@@ -51,7 +55,7 @@ function EditModal({setShowEditModal, userToEdit}) {
                   <label htmlFor="email">Last Name: </label>
                 </div>
                 <div>
-                  <input type="text" name="lastname" id="" value={lastName} className="m-2 rounded p-2 border-gray-800 border-2"/>
+                  <input type="text" name="lastname" id="" onChange={(e)=>{setLastName(e.target.value)}} value={lastName} className="m-2 rounded p-2 border-gray-800 border-2"/>
                 </div>
               </div>
 

@@ -96,6 +96,36 @@ function UserManagement() {
       })
       .then((res) => {
         if (res.ok) {
+          updateTraders();
+          return res.json();
+        } else {
+          throw new Error(res);
+        }
+      }).then((data) => {
+        console.log("Edit this ID: ", data)
+        setUserToEdit(data)
+      })
+  }
+
+  const handleOnEditSubmit = (editInfo) => {
+    fetch(`http://localhost:3000/edit_trader/`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+        },
+        body: JSON.stringify(
+          {
+            id: editInfo.id,
+            email: editInfo.email,
+            first_name: editInfo.firstName,
+            last_name: editInfo.lastName 
+          },
+        ),
+      })
+      .then((res) => {
+        if (res.ok) {
+          updateTraders();
           return res.json();
         } else {
           throw new Error(res);
@@ -184,7 +214,7 @@ function UserManagement() {
           ))}
         </tbody>
       </table>
-      {ShowEditModal && <EditModal setShowEditModal={setShowEditModal} userToEdit={userToEdit} />}
+      {ShowEditModal && <EditModal setShowEditModal={setShowEditModal} userToEdit={userToEdit} handleOnEditSubmit={handleOnEditSubmit}/>}
       {ShowViewModal && <ViewModal setShowViewModal={setShowViewModal} userToEdit={userToEdit}/>}
 
     </div>
