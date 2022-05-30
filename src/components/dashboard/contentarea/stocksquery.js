@@ -3,38 +3,38 @@ import Plot from 'react-plotly.js';
 import { GraphContext } from '../../../contexts/GraphContext';
 
 function Stocksquery() {
-  const {stockChartXValues, setStockChartXValues, stockChartYValues, setStockChartYValues, symbol, setSymbol, chartLabel, setChartLabel} = useContext(GraphContext)
+  const {stockChartXValues, setStockChartXValues, stockChartYValues, setStockChartYValues, symbol, setSymbol, chartLabel, setChartLabel, fetchStocks} = useContext(GraphContext)
   // const [stockChartXValues, setStockChartXValues] = useState([])
   // const [stockChartYValues, setStockChartYValues] = useState([])
   // const [symbol, setSymbol] = useState("");
   // const [chartLabel, setChartLabel] = useState("AMZN")
 
-  const fetchStock = (StockSymbol) =>  {
-    if(StockSymbol !== ""){
-      const API_KEY = '19JF4522MI6LKDM0';
-      let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+  // const fetchStock = (StockSymbol) =>  {
+  //   // if(StockSymbol !== ""){
+  //     const API_KEY = '19JF4522MI6LKDM0';
+  //     let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
   
-      fetch(API_CALL)
-        .then((res)=>{
-          return res.json()
-        })
-        .then((data)=>{
-          console.log(data);
-          if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
-            console.log("5 calls per minute limit.")
-          }else{
-            const xValues = [];
-            const yValues = [];
-            for(var key in data['Time Series (Daily)']){
-              xValues.push(key);
-              yValues.push(data['Time Series (Daily)'][key]['1. open']);
-            }
-            setStockChartXValues(xValues);
-            setStockChartYValues(yValues);
-          }
-        })
-    }
-  }
+  //     fetch(API_CALL)
+  //       .then((res)=>{
+  //         return res.json()
+  //       })
+  //       .then((data)=>{
+  //         console.log(data);
+  //         if(data = {Note: 'Thank you for using Alpha Vantage! Our standard AP…would like to target a higher API call frequency.'}){
+  //           console.log("5 calls per minute limit.")
+  //         }else{
+  //           const xValues = [];
+  //           const yValues = [];
+  //           for(var key in data['Time Series (Daily)']){
+  //             xValues.push(key);
+  //             yValues.push(data['Time Series (Daily)'][key]['1. open']);
+  //           }
+  //           setStockChartXValues(xValues);
+  //           setStockChartYValues(yValues);
+  //         }
+  //       })
+  //   // }
+  // }
 
   useEffect(() => {
     const initialSymbol = 'AMZN'
@@ -45,12 +45,13 @@ function Stocksquery() {
   }, [])
 
   useEffect(() => {
-    fetchStock(symbol);
+    fetchStocks(symbol);
+    console.log("changed symbol")
   }, [symbol])
   
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    fetchStock(symbol);
+    fetchStocks(symbol);
     setChartLabel(symbol)
     setSymbol("")
   }
