@@ -98,7 +98,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
             className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
             />
           <br/>
-          <input type="submit" value="login" 
+          <input type="submit" value="Login" 
             className='rounded bg-sky-500/100 w-24 p-1 text-white'
           />
           <button

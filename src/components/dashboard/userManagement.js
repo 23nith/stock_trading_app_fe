@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { TradersContext } from '../../contexts/TradersContext'
 import { UserContext } from '../../contexts/UserContext';
+import AddUserModal from './userManagement/addUserModal';
 import EditModal from './userManagement/editModal';
 import ViewModal from './userManagement/viewModal';
 
@@ -12,6 +13,7 @@ function UserManagement() {
   const history = useHistory();
   const [ShowEditModal, setShowEditModal] = useState(false)
   const [ShowViewModal, setShowViewModal] = useState(false)
+  const [ShowAddUserModal, setShowAddUserModal] = useState(false)
 
   const onMount = () => {
     fetch("http://localhost:3000/traders", {
@@ -108,7 +110,7 @@ function UserManagement() {
   }
 
   const handleOnEditSubmit = (editInfo) => {
-    fetch(`http://localhost:3000/edit_trader/`, {
+    fetch(`http://localhost:3000/add_user/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -163,8 +165,37 @@ function UserManagement() {
       })
   }
 
+  const handleAddUser = (userInfo) => {
+    fetch(`http://localhost:3000/add_user/`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+          user: {
+            email: userInfo.email,
+            password: userInfo.password,
+            first_name: userInfo.firstName,
+            last_name: userInfo.lastName 
+          }},
+        ),
+      })
+      .then((res) => {
+        if (res.ok) {
+          updateTraders();
+          return res.json();
+        } else {
+          throw new Error(res);
+        }
+      }).then((data) => {
+        console.log("Edit this ID: ", data)
+        setUserToEdit(data)
+      })
+  }
+
   return (
-    <div className='basis-10/12 border-slate-800 border-2'>
+    <div className='basis-10/12 border-slate-800 border-2 overflow-y-scroll overflow-x-hidden'>
       UserManagement
       <table className='min-w-full'>
         <thead className='border-b'>
@@ -216,7 +247,12 @@ function UserManagement() {
       </table>
       {ShowEditModal && <EditModal setShowEditModal={setShowEditModal} userToEdit={userToEdit} handleOnEditSubmit={handleOnEditSubmit}/>}
       {ShowViewModal && <ViewModal setShowViewModal={setShowViewModal} userToEdit={userToEdit}/>}
+      {ShowAddUserModal && <AddUserModal setShowAddUserModal={setShowAddUserModal} handleAddUser={handleAddUser}/>}
 
+      <button
+        className='rounded bg-sky-500/100 w-32 p-1 text-white m-2'
+        onClick={(e)=> {setShowAddUserModal(!ShowAddUserModal)}}
+      >Add New User</button>
     </div>
   )
 }

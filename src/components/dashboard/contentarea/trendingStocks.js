@@ -54,7 +54,7 @@ function TrendingStocks() {
         <tbody>
           {topTen && topTen.map((stock) => (
             <tr key={stock.id}>
-              <td onClick={(e) => {handleOnClick(e, stock.symbol)}}>{stock.symbol}</td>
+              <td onClick={(e) => {handleOnClick(e, stock.symbol)}} className="cursor-pointer">{stock.symbol}</td>
               <td>{stock.latest_price}</td>
               <td>{stock.week_52_high}</td>
               <td>{stock.week_52_low}</td>
