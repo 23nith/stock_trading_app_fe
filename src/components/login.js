@@ -11,7 +11,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
   const [responseData, setResponseData] = useState('')
 
   const onUnmount = async () => {
-    console.log("unmounted")
+    console.log("unmounted", localStorage.getItem("token"))
     fetch("https://stock-trading-app-be.herokuapp.com/current_user", {
       method: "get",
       headers: {
