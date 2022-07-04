@@ -52,7 +52,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
         if (res.ok) {
           console.log(res.headers.get("Authorization"));
           localStorage.setItem("token", res.headers.get("Authorization"));
-          if (localStorage.getItem("token") != null){
+          if (localStorage.getItem("token") != "" && localStorage.getItem("token") != null){
             onUnmount();
             setTimeout(setShowLogin(false), 5000);
           }
