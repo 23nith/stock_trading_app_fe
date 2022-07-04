@@ -10,6 +10,28 @@ const Login = ({setShowLogin, setShowSignUp}) => {
   const [responseHeader, setResponseHeader] = useState('')
   const [responseData, setResponseData] = useState('')
 
+  const onUnmount = async () => {
+    console.log("unmounted")
+    fetch("https://stock-trading-app-be.herokuapp.com/current_user", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        console.log("response: ", res);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("data: ", data.role);
+      localStorage.setItem("user_type", data.role);
+      setCurrentUser(data);
+    })
+  }
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
@@ -38,6 +60,10 @@ const Login = ({setShowLogin, setShowSignUp}) => {
           throw new Error(res);
         }
       })
+      .then((data) => {
+        onUnmount();
+        return data
+      })
     }
 
     onLogin();
@@ -50,34 +76,34 @@ const Login = ({setShowLogin, setShowSignUp}) => {
     }
   }, [responseData, responseHeader])
 
-  useEffect(() => {
-    const onUnmount = async () => {
-      console.log("unmounted")
-      fetch("https://stock-trading-app-be.herokuapp.com/current_user", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("token")
-        }
-      })
-      .then((res) => {
-        if (res.ok) {
-          console.log("response: ", res);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("data: ", data.role);
-        localStorage.setItem("user_type", data.role);
-        setCurrentUser(data);
-      })
-    }
+  // useEffect(() => {
+  //   const onUnmount = async () => {
+  //     console.log("unmounted")
+  //     fetch("https://stock-trading-app-be.herokuapp.com/current_user", {
+  //       method: "get",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": localStorage.getItem("token")
+  //       }
+  //     })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         console.log("response: ", res);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("data: ", data.role);
+  //       localStorage.setItem("user_type", data.role);
+  //       setCurrentUser(data);
+  //     })
+  //   }
   
     
-    return () => {
-      onUnmount();
-    }
-  }, [])
+  //   return () => {
+  //     onUnmount();
+  //   }
+  // }, [])
   
   const handleSignUp = () => {
     setShowLogin(false)
