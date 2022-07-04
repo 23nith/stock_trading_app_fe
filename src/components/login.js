@@ -34,7 +34,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-
+    console.log("currentUser? ", currentUser == null)
     const onLogin = async () => {
       fetch("https://stock-trading-app-be.herokuapp.com/login", {
         method: "post",
@@ -67,6 +67,10 @@ const Login = ({setShowLogin, setShowSignUp}) => {
         }
         return data
       })
+    }
+
+    if(currentUser != null){
+      setTimeout(setShowLogin(false), 5000);
     }
 
     onLogin();
