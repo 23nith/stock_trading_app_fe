@@ -43,37 +43,38 @@ function Menu({setShowLogin}) {
         
         {role == "user" && <div className='my-3.5'>
           <button>
-          <Link to="/front-end-stock-app/" >Dashboard</Link>
+          <Link to="/" >Dashboard</Link>
           </button>
         </div>}
 
         {role == "user" && <div className='my-3.5'>
           <button>
-            <Link to="/front-end-stock-app/portfolio" >Portfolio</Link>
+            <Link to="/portfolio" >Portfolio</Link>
           </button>
         </div>}
 
         {role == "user" && <div className='my-3.5'>
           <button>
-            <Link to="/front-end-stock-app/discover" >Buy/Sell</Link>
+            <Link to="/discover" >Buy/Sell</Link>
           </button>
         </div>}
 
         <div className='my-3.5'>
           <button>
-            <Link to="/front-end-stock-app/history" >Transaction History</Link>
+            <Link to="/history" >Transaction History</Link>
           </button>
         </div>
 
         { role == "admin" && <div className='my-3.5'>
           <button>
-            <Link to="/front-end-stock-app/management" >Account Management</Link>
+            <Link to="/management" >Account Management</Link>
           </button>
         </div>}
 
         <div className='my-3.5'>
           <button onClick={handleOnSignOut}>
-            Sign Out
+            <Link to="/" >Sign Out</Link>
+            {/* Sign Out */}
           </button>
         </div>
 
