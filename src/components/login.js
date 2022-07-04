@@ -54,7 +54,6 @@ const Login = ({setShowLogin, setShowSignUp}) => {
           localStorage.setItem("token", res.headers.get("Authorization"));
           if (localStorage.getItem("token") != "" && localStorage.getItem("token") != null){
             onUnmount();
-            setTimeout(setShowLogin(false), 5000);
           }
           return res.json();
         } else {
@@ -62,7 +61,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
         }
       })
       .then((data) => {
-        onUnmount();
+        setTimeout(setShowLogin(false), 5000);
         return data
       })
     }
