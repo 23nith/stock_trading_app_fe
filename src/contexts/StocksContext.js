@@ -7,7 +7,7 @@ const StocksContextProvider = (props) => {
 
   const fetchUserStocks = (message) => {
     console.log(message);
-    fetch("http://localhost:3000/stocks", {
+    fetch("https://stock-trading-app-be.herokuapp.com/stocks", {
         method: "get",
         headers: {
           "Content-Type": "application/json",

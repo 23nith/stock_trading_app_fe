@@ -16,7 +16,7 @@ function UserManagement() {
   const [ShowAddUserModal, setShowAddUserModal] = useState(false)
 
   const onMount = () => {
-    fetch("http://localhost:3000/traders", {
+    fetch("https://stock-trading-app-be.herokuapp.com/traders", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function UserManagement() {
     console.log("e: ", e.target)
     console.log("key: ", key)
 
-    fetch(`http://localhost:3000/approve_user/`, {
+    fetch(`https://stock-trading-app-be.herokuapp.com/approve_user/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ function UserManagement() {
     console.log("key: ", key)
     setShowEditModal(true)
 
-    fetch(`http://localhost:3000/trader/`, {
+    fetch(`https://stock-trading-app-be.herokuapp.com/trader/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +110,7 @@ function UserManagement() {
   }
 
   const handleOnEditSubmit = (editInfo) => {
-    fetch(`http://localhost:3000/add_user/`, {
+    fetch(`https://stock-trading-app-be.herokuapp.com/add_user/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -141,7 +141,7 @@ function UserManagement() {
   const handleOnView = (e, key) => {
     setShowViewModal(true)
 
-    fetch(`http://localhost:3000/trader/`, {
+    fetch(`https://stock-trading-app-be.herokuapp.com/trader/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -166,7 +166,7 @@ function UserManagement() {
   }
 
   const handleAddUser = (userInfo) => {
-    fetch(`http://localhost:3000/add_user/`, {
+    fetch(`https://stock-trading-app-be.herokuapp.com/add_user/`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",

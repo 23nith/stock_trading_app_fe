@@ -14,7 +14,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
     e.preventDefault();
 
     const onLogin = async () => {
-      fetch("http://localhost:3000/login", {
+      fetch("https://stock-trading-app-be.herokuapp.com/login", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
   useEffect(() => {
     const onUnmount = async () => {
       console.log("unmounted")
-      fetch("http://localhost:3000/current_user", {
+      fetch("https://stock-trading-app-be.herokuapp.com/current_user", {
         method: "get",
         headers: {
           "Content-Type": "application/json",

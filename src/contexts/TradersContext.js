@@ -6,7 +6,7 @@ const TradersContextProvider = (props) => {
   const [traders, setTraders] = useState("")
 
   const updateTraders = () => {
-    fetch("http://localhost:3000/traders", {
+    fetch("https://stock-trading-app-be.herokuapp.com/traders", {
       method: "get",
       headers: {
         "Content-Type": "application/json",

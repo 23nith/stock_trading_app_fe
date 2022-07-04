@@ -39,7 +39,7 @@ function Chart() {
   const [stockCount, setStockCount] = useState([12, 19, 3, 5, 2, 3])
 
   const onMount =  useCallback(() =>{
-    fetch("http://localhost:3000/stocks", {
+    fetch("https://stock-trading-app-be.herokuapp.com/stocks", {
       method: "get",
       headers: {
         "Content-Type": "application/json",

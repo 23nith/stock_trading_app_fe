@@ -11,7 +11,7 @@ function SellStocks() {
   
   const onMount =  useCallback(
     () => {
-      fetch("http://localhost:3000/stocks", {
+      fetch("https://stock-trading-app-be.herokuapp.com/stocks", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ function SellStocks() {
   
   useEffect(() => {
     if(stockToSell !== ""){
-      fetch("http://localhost:3000/stock_info", {
+      fetch("https://stock-trading-app-be.herokuapp.com/stock_info", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ function SellStocks() {
   
   const handleOnSubmitSell = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/transactions", {
+    fetch("https://stock-trading-app-be.herokuapp.com/transactions", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

@@ -8,7 +8,7 @@ function Dashboard() {
 
   useEffect(() => {
     const onMount = async () => {
-      fetch("http://localhost:3000/current_user", {
+      fetch("https://stock-trading-app-be.herokuapp.com/current_user", {
         method: "get",
         headers: {
           "Content-Type": "application/json",
