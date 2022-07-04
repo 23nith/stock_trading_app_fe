@@ -23,7 +23,7 @@ function App() {
   const [showSignUp, setShowSignUp] = useState(false)
 
   return (
-    <Router>
+    // <Router>
       <TopTenContextProvider>
         <TransactionsContextProvider>
           <StocksContextProvider>
@@ -31,27 +31,37 @@ function App() {
               <UserContextProvider>
                 <TradersContextProvider>
                   <div className="App">
-                    {showLogin && <Login setShowLogin={setShowLogin} setShowSignUp={setShowSignUp}/>}
-                    {showSignUp && <SignUp setShowLogin={setShowLogin} setShowSignUp={setShowSignUp}/>}
+                    {showLogin && <Route
+                    exact
+                    path="/"
+                    render={(props) => (
+                      <Login
+                        {...props}
+                        setShowLogin={setShowLogin}
+                        setShowSignUp={setShowSignUp}
+                      />
+                    )}
+                  />}
+                    {showSignUp && (
+                      <Route
+                        exact
+                        path="/"
+                        render={(props) => (
+                          <SignUp
+                            {...props}
+                            setShowLogin={setShowLogin}
+                            setShowSignUp={setShowSignUp}
+                          />
+                        )}
+                      />
+                    )}
                     {(!showLogin && !showSignUp) && <div className='flex border-black border-2 h-screen'>
                       <Menu setShowLogin={setShowLogin}/>
-                      <Switch>
-                        <Route exact path="/front-end-stock-app/">
-                          <Contentarea/>
-                        </Route>
-                        <Route exact path="/front-end-stock-app/portfolio">
-                          <Portfolio/>
-                        </Route>
-                        <Route exact path="/front-end-stock-app/discover">
-                          <Discover/>
-                        </Route>
-                        <Route exact path="/front-end-stock-app/history">
-                          <History/>
-                        </Route>
-                        <Route exact path="/front-end-stock-app/management">
-                          <UserManagement/>
-                        </Route>
-                      </Switch>
+                        <Route exact path="/" component={Contentarea} />
+                        <Route exact path="/portfolio" component={Portfolio} />
+                        <Route exact path="/discover" component={Discover} />
+                        <Route exact path="/history" component={History} />
+                        <Route exact path="/management" component={UserManagement} />
                     </div>}
                   </div>
                 </TradersContextProvider>
@@ -60,7 +70,7 @@ function App() {
           </StocksContextProvider>
         </TransactionsContextProvider>
       </TopTenContextProvider>
-    </Router>
+    // </Router>
   );
 }
 
