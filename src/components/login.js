@@ -69,11 +69,12 @@ const Login = ({setShowLogin, setShowSignUp}) => {
       })
     }
 
+    
+    onLogin();
+    
     if(currentUser != null){
       setTimeout(setShowLogin(false), 5000);
     }
-
-    onLogin();
 
   }
 
