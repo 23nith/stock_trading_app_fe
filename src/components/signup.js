@@ -33,7 +33,7 @@ function SignUp({setShowLogin, setShowSignUp}) {
     setShowLogin(true)
     setShowSignUp(false)
 
-    fetch("http://localhost:3000/signup", {
+    fetch("https://stock-trading-app-be.herokuapp.com/signup", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

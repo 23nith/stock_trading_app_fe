@@ -5,7 +5,7 @@ function Userslist() {
 
   useEffect(() => {
     const onMount = async () => {
-      fetch("http://localhost:3000/traders", {
+      fetch("https://stock-trading-app-be.herokuapp.com/traders", {
         method: "get",
         headers: {
           "Content-Type": "application/json",

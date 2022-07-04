@@ -9,7 +9,7 @@ function History() {
 
   const onMount = useCallback(
     () => {
-      fetch("http://localhost:3000/transactions", {
+      fetch("https://stock-trading-app-be.herokuapp.com/transactions", {
         method: "get",
         headers: {
           "Content-Type": "application/json",

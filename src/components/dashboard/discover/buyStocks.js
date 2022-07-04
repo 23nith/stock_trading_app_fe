@@ -10,7 +10,7 @@ function BuyStocks() {
   const handleOnSubmitSearch = (e) => {
     e.preventDefault();
     
-    fetch("http://localhost:3000/stock_info", {
+    fetch("https://stock-trading-app-be.herokuapp.com/stock_info", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ function BuyStocks() {
 
   const handleOnSubmitBuy = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/transactions", {
+    fetch("https://stock-trading-app-be.herokuapp.com/transactions", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

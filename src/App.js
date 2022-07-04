@@ -16,7 +16,7 @@ import UserContextProvider from './contexts/UserContext';
 import TradersContextProvider from './contexts/TradersContext';
 import SignUp from './components/signup';
 
-const API_URL = 'http://localhost:3000/Login'
+const API_URL = 'https://stock-trading-app-be.herokuapp.com/Login'
 
 function App() {
   const [showLogin, setShowLogin] = useState(true)
