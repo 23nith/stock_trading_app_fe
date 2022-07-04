@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/stock_trading_app_fe/static/css/main.58e562de.css",
-    "main.js": "/stock_trading_app_fe/static/js/main.b4a9b258.js",
+    "main.js": "/stock_trading_app_fe/static/js/main.d1f3ce5e.js",
     "static/js/787.751cba20.chunk.js": "/stock_trading_app_fe/static/js/787.751cba20.chunk.js",
     "index.html": "/stock_trading_app_fe/index.html",
     "main.58e562de.css.map": "/stock_trading_app_fe/static/css/main.58e562de.css.map",
-    "main.b4a9b258.js.map": "/stock_trading_app_fe/static/js/main.b4a9b258.js.map",
+    "main.d1f3ce5e.js.map": "/stock_trading_app_fe/static/js/main.d1f3ce5e.js.map",
     "787.751cba20.chunk.js.map": "/stock_trading_app_fe/static/js/787.751cba20.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.58e562de.css",
-    "static/js/main.b4a9b258.js"
+    "static/js/main.d1f3ce5e.js"
   ]
 }
