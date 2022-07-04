@@ -1,6 +1,6 @@
 {
-  "homepage": "http://23nith.github.io/front-end-stock-app",
-  "name": "stock_front_end",
+  "homepage": "http://23nith.github.io/stock_trading_app_fe",
+  "name": "stock_trading_app_fe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
