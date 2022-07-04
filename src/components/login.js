@@ -61,7 +61,10 @@ const Login = ({setShowLogin, setShowSignUp}) => {
         }
       })
       .then((data) => {
-        setTimeout(setShowLogin(false), 5000);
+        console.log("current_user: ", currentUser)
+        if(currentUser != null){
+          setTimeout(setShowLogin(false), 5000);
+        }
         return data
       })
     }
