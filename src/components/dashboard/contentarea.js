@@ -24,7 +24,6 @@ function Contentarea() {
   
   return (
     <div className='basis-10/12 border-slate-800 border-2 flex flex-col overflow-y-scroll overflow-x-hidden'>
-      Contentarea
       <div className='basis-1/2 border-slate-800 border-2 flex flex-row'>
         <Stocksquery/>
         <TrendingStocks/>
