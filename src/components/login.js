@@ -71,7 +71,7 @@ const Login = ({setShowLogin, setShowSignUp}) => {
 
     
     onLogin();
-    
+
     if(currentUser != null){
       setTimeout(setShowLogin(false), 5000);
     }
@@ -120,26 +120,31 @@ const Login = ({setShowLogin, setShowSignUp}) => {
 
   return ( 
     <div className="w-screen h-screen flex justify-center items-center border-slate-800 border-2">
-      <div>
-        <form onSubmit={handleOnSubmit} className="" >
-          <input type="text" placeholder="email" value={email} 
-            onChange={(e)=>{setEmail(e.target.value)}} 
-            className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
+      <div className="flex flex-row">
+        <div className="border border-primary h-80">
+          <img src={require("../assets/logo_transparent.png")} className="h-full "/>
+        </div>
+        <div className="border border-primary h-80 flex justify-center items-center px-5">
+          <form onSubmit={handleOnSubmit} className="" >
+            <input type="text" placeholder="email" value={email} 
+              onChange={(e)=>{setEmail(e.target.value)}} 
+              className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
+              />
+            <br/>
+            <input type="password" placeholder="password" 
+              value={password} onChange={(e)=>{setPassword(e.target.value)}} 
+              className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
+              />
+            <br/>
+            <input type="submit" value="Login" 
+              className='rounded bg-sky-500/100 w-24 p-1 text-white'
             />
-          <br/>
-          <input type="password" placeholder="password" 
-            value={password} onChange={(e)=>{setPassword(e.target.value)}} 
-            className='rounded-md border-slate-800 border-2 m-2 p-1 w-64'
-            />
-          <br/>
-          <input type="submit" value="Login" 
-            className='rounded bg-sky-500/100 w-24 p-1 text-white'
-          />
-          <button
-            onClick={handleSignUp} 
-            className='rounded bg-slate-700 w-24 p-1 text-white m-2'
-            >Sign Up</button>
-        </form>
+            <button
+              onClick={handleSignUp} 
+              className='rounded bg-slate-700 w-24 p-1 text-white m-2'
+              >Sign Up</button>
+          </form>
+        </div>
       </div>
     </div>
   );

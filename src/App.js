@@ -30,6 +30,7 @@ function App() {
             <GraphContextProvider>
               <UserContextProvider>
                 <TradersContextProvider>
+                  {/* <img src={require("./assets/logo_transparent.png")} /> */}
                   <div className="App">
                     {showLogin && <Route
                     exact
